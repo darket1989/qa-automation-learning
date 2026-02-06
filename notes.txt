@@ -7,6 +7,8 @@ Practice Exercise
 
 
 - Commit and push the branch to GitHub
+    git add.
+    git commit -m "Comment"
     git push origin practice-branch
 
 - Merge it into main on GitHub
