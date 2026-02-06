@@ -1,1 +1,16 @@
-Git practice complete
+Practice Exercise
+Create a new branch called practice-branch:
+    git checkout -b practice-branch
+
+
+Add a new file called notes.txt and write “Git practice complete” in it
+
+
+Commit and push the branch to GitHub
+    git push origin practice-branch
+
+Merge it into main on GitHub
+
+
+Pull the updated main branch to your computer
+    git pull origin main
