@@ -46,7 +46,6 @@ jobs:
             # python -m pip install playwright pytest-playwright
           fi
 
-      # Mantén esta sección solo si usas Playwright
       - name: Install Playwright browsers (Linux deps included)
         if: ${{ always() }}
         run: |
@@ -56,10 +55,11 @@ jobs:
             echo "Playwright no está instalado; se omite la instalación de navegadores."
           fi
 
-      - name: Run tests (only tests/test_login.py)
+      - name: RUN TESTS
         run: |
           mkdir -p test-results
           python -m pytest tests/test_login.py \
+          python -m pytest tests/test_functionalities.py \
             --junitxml=test-results/junit.xml \
             --html=test-results/report.html --self-contained-html \
             --maxfail=1 -q --disable-warnings
