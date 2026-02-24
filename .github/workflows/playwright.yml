@@ -1,10 +1,10 @@
-name: CI - Run login test
+name: CI - Run login & functionalities tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -26,8 +26,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          # Si tienes requirements.txt puedes habilitar cache:
-          # cache: "pip"
+          # cache: "pip"  # optional if using requirements.txt
 
       - name: Show Python info (debug)
         run: |
@@ -40,26 +39,29 @@ jobs:
           if [ -f requirements.txt ]; then
             python -m pip install -r requirements.txt
           else
-            # Fallback si aún no tienes requirements.txt
-            python -m pip install pytest pytest-html
-            # Si usas Playwright, descomenta:
-            # python -m pip install playwright pytest-playwright
+            # Minimal fallback if no requirements.txt
+            python -m pip install pytest pytest-html pytest-playwright
           fi
 
       - name: Install Playwright browsers (Linux deps included)
-        if: ${{ always() }}
         run: |
-          if python -c "import importlib.util; print(importlib.util.find_spec('playwright') is not None)"; then
+          if python - <<'PY'
+import importlib.util
+print(importlib.util.find_spec('playwright') is not None)
+PY
+          then
             python -m playwright install --with-deps
           else
-            echo "Playwright no está instalado; se omite la instalación de navegadores."
+            echo "Playwright not installed; skipping browsers install."
           fi
 
       - name: RUN TESTS
         run: |
           mkdir -p test-results
-          python -m pytest tests/test_login.py \
-          python -m pytest tests/test_functionalities.py \
+          # Run both modules in one pytest call so we generate a single report
+          python -m pytest \
+            tests/test_login.py \
+            tests/test_functionalities.py \
             --junitxml=test-results/junit.xml \
             --html=test-results/report.html --self-contained-html \
             --maxfail=1 -q --disable-warnings
@@ -71,3 +73,4 @@ jobs:
           name: test-results
           path: test-results/
           retention-days: 7
+``
