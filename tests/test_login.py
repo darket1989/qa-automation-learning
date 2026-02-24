@@ -15,8 +15,7 @@ def test_valid_login(page: Page):
 
     login_button = page.locator("input#login-button")
     login_button.click()
-
-    page.screenshot(path="login.png")
+    
     assert page.get_by_test_id("title").is_visible
     assert page.url == login_dashboard
 
@@ -34,7 +33,6 @@ def test_invalid_login(page: Page):
 
     error_message = page.get_by_text("Epic sadface: Username and password do not match any user in this service")
     assert error_message.is_visible
-    page.screenshot(path= "error_message_login.png")
 
 def test_logout_session(page: Page):
     page.goto(URL)
@@ -55,7 +53,6 @@ def test_logout_session(page: Page):
     logout_option.click()
 
     assert login_button.is_visible()
-    page.screenshot(path="successfull_login.png")
 
 
 @pytest.mark.parametrize("username, password",[
