@@ -1,1 +1,8 @@
-Git practice complete
+LOCATORS
+
+1.	Prefer unique IDs or data-test attributes
+
+Example:
+ID -->       page.locator('#login-button')  
+Data_test -->page.locator('[data-test="login-button"]')
+Class -->    page.locator(".classname")
