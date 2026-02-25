@@ -24,8 +24,8 @@ def creds():
     Provides credentials from environment variables.
     Fails early with a clear message if missing.
     """
-    user = os.getenv("user")
-    pwd = os.getenv("password")
+    user = os.getenv("USERNAME")
+    pwd = os.getenv("PASSWORD")
     if not user or not pwd:
         raise RuntimeError("Missing USERNAME/PASSWORD in environment. ")
     return {"valid_user": user, "pwd": pwd}
