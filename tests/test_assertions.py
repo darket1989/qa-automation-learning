@@ -18,3 +18,8 @@ def test_basic_assertions(page):
     
     expect(page.locator('[data-test="remove-sauce-labs-backpack"]')).to_have_css("color","rgb(226, 35, 26)")
     
+def test_load_table(page):
+    page.goto("https://ant.design/components/table")
+
+    
+
